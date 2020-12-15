@@ -78,7 +78,7 @@ window.onload = function () {
 function enviarPais() {
     let url = "http://localhost:3000/paises";
     let pais = {
-        Nombre: document.getElementById("Pais").value
+        nombre: document.getElementById("Pais").value
     };
     let init = {
         method: 'POST',
@@ -97,8 +97,8 @@ function enviarPais() {
 function enviarCiudad() {
     let url = "http://localhost:3000/ciudades";
     let ciudad = {
-        Pais:document.getElementById("Pais").value,
-        Nombre: document.getElementById("nomCiudad").value
+        pais:document.getElementById("Pais").value,
+        nombre: document.getElementById("nomCiudad").value
     };
     let init = {
         method: 'POST',
@@ -117,8 +117,8 @@ function enviarCiudad() {
 function enviarMonumento() {
     let url = "http://localhost:3000/monumentos";
     let monumento = {
-        Ciudad: document.getElementById("nomCiudad").value,
-        Nombre: document.getElementById("nomMonumento").value   
+        ciudad: document.getElementById("nomCiudad").value,
+        nombre: document.getElementById("nomMonumento").value   
     };
     let init = {
         method: 'POST',
