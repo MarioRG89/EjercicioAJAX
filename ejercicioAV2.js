@@ -21,34 +21,36 @@ window.onload = () => {
             .then(datosEnviados => console.log(datosEnviados))
             .catch(error => console.error(error));
     }, false)
-    document.getElementById("fecha").addEventListener("change",function(){
-        let tabla=document.getElementById("tabla");
-        let fechaEl=document.getElementById("fecha");
-        tabla.innerHTML=" <tr> "
-        + "<td>Id</td>"
-        + "<td>Descripcion</td>"
-        + "<td>Precio</td>"
-        + "<td>Fecha</td>"
-        + "</tr>";
+    document.getElementById("fecha").addEventListener("change", function () {
+        let tabla = document.getElementById("tabla");
+        let fechaEl = document.getElementById("fecha").value;
+        tabla.innerHTML = " <tr> "
+            + "<td>Id</td>"
+            + "<td>Descripcion</td>"
+            + "<td>Precio</td>"
+            + "<td>Fecha</td>"
+            + "</tr>";
         fetch("http://localhost:3000/compras")
-        .then(response=>{
-            if (response.ok) {
-                return response.json();
-            }
-        })
-        .then(datos=>{
-            datos.sort((fechaEl,b)=>fechaEl > b.fechaCompra);
-            datos.forEach(element => {
-                tabla.innerHTML += "<tr>" 
-                + "<td>" + element.id + "</td>"
-                + "<td>" + element.descripcion + "</td>"
-                + "<td>" + element.preciototal + "</td>"
-                + "<td>" + element.fechaCompra + "</td>"
-                "</tr>"
-            });
-        })
-        .catch(error => console.error(error));
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+            })
+            .then(datos => {
+                datos.sort((a, b) => a.preciototal > b.preciototal);
+                datos.forEach(element => {
+                    if (element.fechaCompra == fechaEl) {
+                        tabla.innerHTML += "<tr>"
+                            + "<td>" + element.id + "</td>"
+                            + "<td>" + element.descripcion + "</td>"
+                            + "<td>" + element.preciototal + "</td>"
+                            + "<td>" + element.fechaCompra + "</td>"
+                        "</tr>"
+                    }
+                });
+            })
+            .catch(error => console.error(error));
 
-    },false)
+    }, false)
 
 }
