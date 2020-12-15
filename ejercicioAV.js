@@ -50,7 +50,9 @@ window.onload = function () {
                 datos.forEach(element=>
                     ciudades.push(element.nombre)    
                 )
+                
                 if (!ciudades.includes(document.getElementById("Ciudad").value)) {
+                    console.log("entre");
                     enviarCiudad();
                 } else {
                     console.log("existe la ciudad");
