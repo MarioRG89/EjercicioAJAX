@@ -56,6 +56,19 @@ window.onload = function () {
                     console.log("existe la ciudad");
                 }
             })
+        fetch("http://localhost:3000/monumentos")
+        .then(response=> response.json())
+            .then(datos=>{
+                let monumentos=[];
+                datos.forEach(element=>
+                    monumentos.push(element.nombre)  
+                )
+                if (!monumentos.includes(document.getElementById("Monumento").value)) {
+                    enviarMonumento();
+                } else {
+                    console.log("existe el monumento");
+                }
+            })
     }, false)
 }
 function enviarPais() {
@@ -97,6 +110,27 @@ function enviarCiudad() {
         .then(datosEnviados => console.log(datosEnviados))
         .catch(error => console.error(error));
 }
+function enviarMonumento() {
+    let url = "http://localhost:3000/monumentos";
+    let monumento = {
+        Ciudad: document.getElementById("Ciudad").value,
+        Nombre: document.getElementById("Monumento").value   
+    };
+    let init = {
+        method: 'POST',
+        body: JSON.stringify(monumento),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    fetch(url, init)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(datosEnviados => console.log(datosEnviados))
+        .catch(error => console.error(error));
+}
+
 
 function cambiarOpciones(select2, select) {
     select2.innerHTML = "";
