@@ -46,12 +46,13 @@ window.onload = function () {
         fetch("http://localhost:3000/ciudades")
             .then(response=> response.json())
             .then(datos=>{
+                let ciudad = document.getElementById("nomCiudad").value ;
                 let ciudades=[];
                 datos.forEach(element=>
                     ciudades.push(element.nombre)    
                 )
-                
-                if (!ciudades.includes(document.getElementById("Ciudad").value)) {
+                console.log(ciudades);
+                if (!ciudades.includes(ciudad)) {
                     console.log("entre");
                     enviarCiudad();
                 } else {
@@ -65,7 +66,8 @@ window.onload = function () {
                 datos.forEach(element=>
                     monumentos.push(element.nombre)  
                 )
-                if (!monumentos.includes(document.getElementById("Monumento").value)) {
+                console.log(monumentos);
+                if (!monumentos.includes(document.getElementById("nomMonumento").value)) {
                     enviarMonumento();
                 } else {
                     console.log("existe el monumento");
@@ -96,7 +98,7 @@ function enviarCiudad() {
     let url = "http://localhost:3000/ciudades";
     let ciudad = {
         Pais:document.getElementById("Pais").value,
-        Nombre: document.getElementById("Ciudad").value
+        Nombre: document.getElementById("nomCiudad").value
     };
     let init = {
         method: 'POST',
@@ -115,8 +117,8 @@ function enviarCiudad() {
 function enviarMonumento() {
     let url = "http://localhost:3000/monumentos";
     let monumento = {
-        Ciudad: document.getElementById("Ciudad").value,
-        Nombre: document.getElementById("Monumento").value   
+        Ciudad: document.getElementById("nomCiudad").value,
+        Nombre: document.getElementById("nomMonumento").value   
     };
     let init = {
         method: 'POST',
