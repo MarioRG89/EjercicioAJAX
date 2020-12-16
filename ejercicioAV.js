@@ -3,6 +3,8 @@ window.onload = function () {
     var select2 = document.getElementById("ciudad");
     var formulario = document.getElementById("formulario");
     var formulario2 = document.getElementById("formulario2");
+    var modificar= document.getElementById("modificar");
+    var borrar= document.getElementById("borrar");
     mostrarPais(select);
     mostrarCiudad(select2);
     select.addEventListener("change", function () {
@@ -44,12 +46,12 @@ window.onload = function () {
                 }
             });
         fetch("http://localhost:3000/ciudades")
-            .then(response=> response.json())
-            .then(datos=>{
-                let ciudad = document.getElementById("nomCiudad").value ;
-                let ciudades=[];
-                datos.forEach(element=>
-                    ciudades.push(element.nombre)    
+            .then(response => response.json())
+            .then(datos => {
+                let ciudad = document.getElementById("nomCiudad").value;
+                let ciudades = [];
+                datos.forEach(element =>
+                    ciudades.push(element.nombre)
                 )
                 console.log(ciudades);
                 if (!ciudades.includes(ciudad)) {
@@ -60,11 +62,11 @@ window.onload = function () {
                 }
             })
         fetch("http://localhost:3000/monumentos")
-        .then(response=> response.json())
-            .then(datos=>{
-                let monumentos=[];
-                datos.forEach(element=>
-                    monumentos.push(element.nombre)  
+            .then(response => response.json())
+            .then(datos => {
+                let monumentos = [];
+                datos.forEach(element =>
+                    monumentos.push(element.nombre)
                 )
                 console.log(monumentos);
                 if (!monumentos.includes(document.getElementById("nomMonumento").value)) {
@@ -74,6 +76,8 @@ window.onload = function () {
                 }
             })
     }, false)
+    modificar.addEventListener("click",modificarEngeneral,false)
+    borrar.addEventListener("click",borrarEngeneral,false)
 }
 function enviarPais() {
     let url = "http://localhost:3000/paises";
@@ -97,7 +101,7 @@ function enviarPais() {
 function enviarCiudad() {
     let url = "http://localhost:3000/ciudades";
     let ciudad = {
-        pais:document.getElementById("Pais").value,
+        pais: document.getElementById("Pais").value,
         nombre: document.getElementById("nomCiudad").value
     };
     let init = {
@@ -118,7 +122,7 @@ function enviarMonumento() {
     let url = "http://localhost:3000/monumentos";
     let monumento = {
         ciudad: document.getElementById("nomCiudad").value,
-        nombre: document.getElementById("nomMonumento").value   
+        nombre: document.getElementById("nomMonumento").value
     };
     let init = {
         method: 'POST',
@@ -188,3 +192,76 @@ function mostrarCiudad(select2) {
         .catch(error => console.error(error));
 }
 
+function modificarEngeneral() {
+    fetch("http://localhost:3000/paises")
+        .then(respuesta => {
+            if (respuesta.ok) {
+                return respuesta.json();
+            } else {
+                return "error";
+            }
+        })
+        .then((datos) => {
+            let nombre = [];
+            datos.forEach(element => {
+                nombre.push(element.nombre);
+            });
+            console.log(nombre);
+            let idMod = nombre.indexOf(document.getElementById("pais").value);
+            console.log(idMod);
+            let url = "http://localhost:3000/paises/" + (idMod + 1);
+            let pais = {
+                nombre: document.getElementById("Pais").value
+            };
+            let init = {
+                method: 'PUT',
+                body: JSON.stringify(pais),
+                headers: { 'Content-Type': 'application/json' }
+            };
+            fetch(url, init)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(datosEnviados => console.log(datosEnviados))
+                .catch(error => console.error(error));
+
+        })
+        .catch(error => console.error(error));
+}
+function borrarEngeneral() {
+    fetch("http://localhost:3000/paises")
+        .then(respuesta => {
+            if (respuesta.ok) {
+                return respuesta.json();
+            } else {
+                return "error";
+            }
+        })
+        .then((datos) => {
+            let nombre = [];
+            datos.forEach(element => {
+                nombre.push(element.nombre);
+            });
+            console.log(nombre);
+            let idMod = nombre.indexOf(document.getElementById("pais").value);
+            console.log(idMod);
+            let url = "http://localhost:3000/paises/" + (idMod + 1);
+            let init = {
+                method: 'DELETE',
+                body: '',
+                headers: { 'Content-Type': 'application/json' }
+            };
+            fetch(url, init)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(datosEnviados => console.log(datosEnviados))
+                .catch(error => console.error(error));
+
+        })
+        .catch(error => console.error(error));
+}
