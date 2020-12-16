@@ -23,7 +23,7 @@ window.onload = () => {
     }, false)
     document.getElementById("fecha").addEventListener("change",function(){
         let tabla=document.getElementById("tabla");
-        let fechaEl=document.getElementById("fecha");
+        let fechaEl=document.getElementById("fecha").value;
         tabla.innerHTML=" <tr> "
         + "<td>Id</td>"
         + "<td>Descripcion</td>"
@@ -37,14 +37,16 @@ window.onload = () => {
             }
         })
         .then(datos=>{
-            datos.sort((fechaEl,b)=>fechaEl > b.fechaCompra);
+            datos.sort((a,b)=>a.preciototal > b.preciototal);
             datos.forEach(element => {
+                if(fechaEl==element.fechaCompra){
                 tabla.innerHTML += "<tr>" 
                 + "<td>" + element.id + "</td>"
                 + "<td>" + element.descripcion + "</td>"
                 + "<td>" + element.preciototal + "</td>"
                 + "<td>" + element.fechaCompra + "</td>"
                 "</tr>"
+                }
             });
         })
         .catch(error => console.error(error));
