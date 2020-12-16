@@ -10,6 +10,7 @@ window.onload = function () {
     select.addEventListener("change", function () {
         cambiarOpciones(select2, select);
     }, false)
+    //Mostrar monumentos en la tabla
     formulario.addEventListener("submit", function (event) {
         event.preventDefault();
         let tabla = document.getElementById("tabla");
@@ -30,6 +31,7 @@ window.onload = function () {
                 })
             })
     }, false)
+    //Comprobaciones de si esta ya el pais ciudad o monumento
     formulario2.addEventListener("submit", function (event) {
         event.preventDefault()
         fetch("http://localhost:3000/paises")
@@ -79,6 +81,7 @@ window.onload = function () {
     modificar.addEventListener("click",modificarEngeneral,false)
     borrar.addEventListener("click",borrarEngeneral,false)
 }
+//POST de pais
 function enviarPais() {
     let url = "http://localhost:3000/paises";
     let pais = {
@@ -98,6 +101,7 @@ function enviarPais() {
         .then(datosEnviados => console.log(datosEnviados))
         .catch(error => console.error(error));
 }
+//POST de ciudad
 function enviarCiudad() {
     let url = "http://localhost:3000/ciudades";
     let ciudad = {
@@ -118,6 +122,7 @@ function enviarCiudad() {
         .then(datosEnviados => console.log(datosEnviados))
         .catch(error => console.error(error));
 }
+//POST de monumento
 function enviarMonumento() {
     let url = "http://localhost:3000/monumentos";
     let monumento = {
@@ -139,7 +144,7 @@ function enviarMonumento() {
         .catch(error => console.error(error));
 }
 
-
+//Select anidados pais con sus ciudades
 function cambiarOpciones(select2, select) {
     select2.innerHTML = "";
     fetch("http://localhost:3000/ciudades")
@@ -158,6 +163,7 @@ function cambiarOpciones(select2, select) {
             });
         });
 }
+//Mostrar pais en el select
 function mostrarPais(select) {
     fetch("http://localhost:3000/paises")
         .then(respuesta => {
@@ -175,6 +181,7 @@ function mostrarPais(select) {
         })
         .catch(error => console.error(error));
 }
+//Mostrar ciudades en el select
 function mostrarCiudad(select2) {
     fetch("http://localhost:3000/ciudades")
         .then(respuesta => {
@@ -191,7 +198,7 @@ function mostrarCiudad(select2) {
         })
         .catch(error => console.error(error));
 }
-
+// modificar pais
 function modificarEngeneral() {
     fetch("http://localhost:3000/paises")
         .then(respuesta => {
@@ -230,6 +237,7 @@ function modificarEngeneral() {
         })
         .catch(error => console.error(error));
 }
+//borrar pais
 function borrarEngeneral() {
     fetch("http://localhost:3000/paises")
         .then(respuesta => {
