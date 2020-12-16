@@ -18,7 +18,7 @@ window.onload = () => {
                 console.log(usuarios);
                 console.log(contraseñas);
                 
-                if (usuarios.includes(document.getElementById("usuario"))) {
+                if (usuarios.includes(document.getElementById("usuario").value)) {
                     console.log("usuario existe");
                     let indiceUsuario = usuarios.indexOf(document.getElementById("usuario"));
                     if (contraseña[indiceUsuario] == document.getElementById("contraseña")) {
