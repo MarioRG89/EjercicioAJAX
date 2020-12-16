@@ -32,31 +32,35 @@ function comprobarUsuarios(event) {
                 }
             } else {
                 if (confirm("El usuario no existe ¿Quieres registrarte?")) {
-                    let url = "http://localhost:3000/usuarios";
-                    let cliente = {
-                        usuario: document.getElementById("usuario").value,
-                        contraseña: document.getElementById("contraseña").value
-                    };
-                    let init = {
-                        method: 'POST',
-                        body: JSON.stringify(cliente),
-                        headers: { 'Content-Type': 'application/json' }
-                    };
-                    fetch(url, init)
-                        .then(response => {
-                            if (response.ok) {
-                                return response.json();
-                            }
-                        })
-                        .then(datosEnviados => console.log(datosEnviados))
-                        .catch(error => console.error(error));
+                    envioDatosUsuarioNuevo();
                 }else{
                     document.body.innerHTML="";
                 }
             }
         });
 }
-
+//envia datos de usuario nuevo
+function envioDatosUsuarioNuevo() {
+    let url = "http://localhost:3000/usuarios";
+    let cliente = {
+        usuario: document.getElementById("usuario").value,
+        contraseña: document.getElementById("contraseña").value
+    };
+    let init = {
+        method: 'POST',
+        body: JSON.stringify(cliente),
+        headers: { 'Content-Type': 'application/json' }
+    };
+    fetch(url, init)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(datosEnviados => console.log(datosEnviados))
+        .catch(error => console.error(error));
+}
+//busca libro por la palabra clave
 function buscarLibros(event){
     event.preventDefault();
     let tabla=document.getElementById("tabla");

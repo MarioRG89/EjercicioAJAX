@@ -24,6 +24,7 @@ window.onload = function () {
                 }
             })
             .then((datos) => {
+                //Muestra los monumentos correspondiente de la ciudad
                 datos.forEach(element => {
                     if (element.ciudad == select2.value) {
                         document.getElementById("tabla").innerHTML += "<td>" + element.nombre + "</td>";
